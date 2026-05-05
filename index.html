@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ansh Harjai — Full Stack & AI/ML Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0a08;
+      --surface: #111110;
+      --border: #222220;
+      --accent: #c8f56a;
+      --accent2: #6af5c8;
+      --muted: #666660;
+      --text: #e8e8e2;
+      --text-dim: #999990;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* NOISE OVERLAY */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.4;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 3rem;
+      border-bottom: 1px solid var(--border);
+      background: rgba(10,10,8,0.85);
+      backdrop-filter: blur(12px);
+    }
+
+    .nav-logo {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 8rem 3rem 4rem;
+      gap: 4rem;
+      position: relative;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 20%;
+      right: 5%;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(200,245,106,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.1s;
+    }
+
+    .hero-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(3.5rem, 6vw, 6rem);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.2s;
+    }
+
+    .hero-name em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .dual-track {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.28s;
+    }
+
+    .track-pill {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.45rem 1rem;
+      border-radius: 2px;
+      font-weight: 500;
+    }
+
+    .track-fs {
+      background: rgba(106,245,200,0.1);
+      border: 1px solid rgba(106,245,200,0.35);
+      color: var(--accent2);
+    }
+
+    .track-ai {
+      background: rgba(200,245,106,0.1);
+      border: 1px solid rgba(200,245,106,0.35);
+      color: var(--accent);
+    }
+
+    .track-divider {
+      color: var(--muted);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.8rem;
+    }
+
+    .hero-tagline {
+      font-size: 1.1rem;
+      color: var(--text-dim);
+      max-width: 420px;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.35s;
+      line-height: 1.7;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.5s;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #0a0a08;
+      border: 1px solid var(--accent);
+    }
+
+    .btn-primary:hover {
+      background: transparent;
+      color: var(--accent);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-dim);
+      border: 1px solid var(--border);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* HERO RIGHT — stats */
+    .hero-stats {
+      display: grid;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.4s;
+    }
+
+    .stat-item {
+      background: var(--surface);
+      padding: 2rem;
+    }
+
+    .stat-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 3rem;
+      line-height: 1;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .hero-contact {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      padding: 2rem;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+    }
+
+    .hero-contact a {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .hero-contact a:hover { color: var(--accent); }
+
+    /* SECTION LAYOUT */
+    section {
+      padding: 5rem 3rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1.5rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .section-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+    }
+
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      letter-spacing: -0.02em;
+    }
+
+    /* SKILLS */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .skill-card {
+      background: var(--surface);
+      padding: 2rem;
+      transition: background 0.2s;
+    }
+
+    .skill-card:hover { background: #161614; }
+
+    .skill-category {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 1rem;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      padding: 0.3rem 0.7rem;
+      background: rgba(200,245,106,0.06);
+      border: 1px solid rgba(200,245,106,0.15);
+      color: var(--text-dim);
+      border-radius: 2px;
+    }
+
+    /* EXPERIENCE */
+    .exp-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .exp-item {
+      background: var(--surface);
+      padding: 2.5rem;
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 2rem;
+      transition: background 0.2s;
+    }
+
+    .exp-item:hover { background: #161614; }
+
+    .exp-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .exp-date {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+    }
+
+    .exp-company {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+    }
+
+    .exp-location {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--muted);
+    }
+
+    .exp-role {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      letter-spacing: -0.01em;
+    }
+
+    .exp-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .exp-bullets li {
+      font-size: 0.875rem;
+      color: var(--text-dim);
+      padding-left: 1.2rem;
+      position: relative;
+      line-height: 1.6;
+    }
+
+    .exp-bullets li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 0.75rem;
+    }
+
+    /* PROJECTS */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .project-card {
+      background: var(--surface);
+      padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transition: background 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+
+    .project-card:hover::before { transform: scaleX(1); }
+    .project-card:hover { background: #161614; }
+
+    .project-badge {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .project-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.6rem;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    .project-desc {
+      font-size: 0.875rem;
+      color: var(--text-dim);
+      line-height: 1.65;
+    }
+
+    .project-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: auto;
+    }
+
+    .stack-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.62rem;
+      padding: 0.25rem 0.6rem;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-radius: 2px;
+    }
+
+    .project-link {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--accent2);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: gap 0.2s;
+    }
+
+    .project-link:hover { gap: 0.6rem; }
+
+    /* EDUCATION */
+    .edu-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .edu-card {
+      background: var(--surface);
+      padding: 2.5rem;
+    }
+
+    .edu-degree {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.01em;
+    }
+
+    .edu-school {
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      margin-bottom: 0.3rem;
+    }
+
+    .edu-meta {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+    }
+
+    .edu-gpa {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      padding: 0.4rem 0.8rem;
+      border: 1px solid var(--border);
+      margin-bottom: 1rem;
+    }
+
+    .edu-courses {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.2rem;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .footer-links a {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--accent); }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* SCROLLBAR */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; padding: 6rem 1.5rem 3rem; }
+      .hero::after { display: none; }
+      .hero-stats { display: grid; grid-template-columns: 1fr 1fr; }
+      section { padding: 3.5rem 1.5rem; }
+      .exp-item { grid-template-columns: 1fr; gap: 0.75rem; }
+      .edu-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <span class="nav-logo">AH — Portfolio</span>
+    <ul class="nav-links">
+      <li><a href="#education">Education</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#skills">Skills</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div>
+      <p class="hero-label">New York, NY · Open to Work</p>
+      <h1 class="hero-name">Ansh<br /><em>Harjai</em></h1>
+      <div class="dual-track">
+        <span class="track-pill track-fs">Full Stack Engineer</span>
+        <span class="track-divider">×</span>
+        <span class="track-pill track-ai">AI/ML Engineer</span>
+      </div>
+      <p class="hero-tagline">
+        I build end-to-end — React frontends, Flask/Django backends, Docker deployments, and RAG pipelines with fine-tuned LLMs. Comfortable shipping at every layer of the stack.
+      </p>
+      <div class="hero-cta">
+        <a href="mailto:ah7163@nyu.edu" class="btn btn-primary">Get in touch ↗</a>
+        <a href="https://github.com/" target="_blank" class="btn btn-ghost">GitHub</a>
+        <a href="https://linkedin.com/" target="_blank" class="btn btn-ghost">LinkedIn</a>
+      </div>
+    </div>
+
+    <div>
+      <div class="hero-stats">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border)">
+          <div class="stat-item">
+            <div class="stat-num">3.89</div>
+            <div class="stat-label">GPA at NYU</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">3+</div>
+            <div class="stat-label">AI Chatbots Deployed</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">40%</div>
+            <div class="stat-label">Reporting Hours Saved</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">3rd</div>
+            <div class="stat-label">NYU Hackathon Place</div>
+          </div>
+        </div>
+        <div class="hero-contact">
+          <a href="mailto:ah7163@nyu.edu">✉ ah7163@nyu.edu</a>
+          <a href="tel:6467023732">✆ (646) 702-3732</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-header reveal">
+      <span class="section-num">01</span>
+      <h2 class="section-title">Technical Skills</h2>
+    </div>
+    <div class="skills-grid reveal">
+      <div class="skill-card">
+        <div class="skill-category">Machine Learning & AI</div>
+        <div class="skill-tags">
+          <span class="tag">PyTorch</span>
+          <span class="tag">TensorFlow</span>
+          <span class="tag">Scikit-learn</span>
+          <span class="tag">NLP</span>
+          <span class="tag">Computer Vision</span>
+          <span class="tag">LLMs</span>
+          <span class="tag">Llama-3</span>
+          <span class="tag">GPT-4</span>
+          <span class="tag">LoRA / QLoRA</span>
+          <span class="tag">Fine-Tuning</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-category">Data Engineering</div>
+        <div class="skill-tags">
+          <span class="tag">PySpark</span>
+          <span class="tag">GraphFrames</span>
+          <span class="tag">SQL</span>
+          <span class="tag">MongoDB</span>
+          <span class="tag">Qdrant</span>
+          <span class="tag">FAISS</span>
+          <span class="tag">Redis</span>
+          <span class="tag">Celery</span>
+          <span class="tag">Vector Databases</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-category">Software & Deployment</div>
+        <div class="skill-tags">
+          <span class="tag">Python</span>
+          <span class="tag">C++</span>
+          <span class="tag">Docker</span>
+          <span class="tag">Flask</span>
+          <span class="tag">FastAPI</span>
+          <span class="tag">Azure AI</span>
+          <span class="tag">ETL Pipelines</span>
+          <span class="tag">Git / GitHub</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="section-header reveal">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Experience</h2>
+    </div>
+    <div class="exp-list">
+
+      <div class="exp-item reveal">
+        <div class="exp-meta">
+          <span class="exp-date">APR 2025 – PRESENT</span>
+          <span class="exp-company">New York University</span>
+          <span class="exp-location">Brooklyn, NY</span>
+        </div>
+        <div>
+          <h3 class="exp-role">CSE Lab Assistant</h3>
+          <ul class="exp-bullets">
+            <li>Developed a full-stack lab monitoring web app showing real-time availability of 30+ university lab computers using Python, Flask, SQLAlchemy, and SQLite.</li>
+            <li>Built a backend service to ping and log machine states every 30 seconds, maintaining live system data in the database.</li>
+            <li>Provide technical assistance during lab sessions, resolving hardware/software issues and ensuring consistent uptime.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item reveal">
+        <div class="exp-meta">
+          <span class="exp-date">JAN – MAY 2024</span>
+          <span class="exp-company">Polestar Solutions</span>
+          <span class="exp-location">Uttar Pradesh, India</span>
+        </div>
+        <div>
+          <h3 class="exp-role">Data Science Intern</h3>
+          <ul class="exp-bullets">
+            <li>Deployed 3 AI-powered chatbots using Retrieval-Augmented Generation (RAG) to automate HR and document-based queries, improving answer quality by 20%.</li>
+            <li>Boosted application response time by 30% through optimized RESTful APIs using Flask, SQLAlchemy, and Azure AI Search.</li>
+            <li>Reduced SQL query times by 20% via database performance tuning and strategic indexing.</li>
+            <li>Improved chatbot reliability by refining retrieval strategies and prompt chaining with LangChain.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item reveal">
+        <div class="exp-meta">
+          <span class="exp-date">MAY – JUL 2023</span>
+          <span class="exp-company">HCLTech</span>
+          <span class="exp-location">Uttar Pradesh, India</span>
+        </div>
+        <div>
+          <h3 class="exp-role">Software Engineering Intern</h3>
+          <ul class="exp-bullets">
+            <li>Designed and deployed interactive Power BI dashboards for enterprise stakeholders using complex DAX measures to track KPIs and visualize real-time business trends.</li>
+            <li>Built automated ETL workflows using Python and SQL to aggregate data from disparate sources, reducing manual reporting hours by 40%.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-header reveal">
+      <span class="section-num">03</span>
+      <h2 class="section-title">Projects</h2>
+    </div>
+    <div class="projects-grid">
+
+      <div class="project-card reveal">
+        <div class="project-badge">🏆 3rd Place — NYU Hackathon</div>
+        <h3 class="project-name">NYU Bro</h3>
+        <p class="project-desc">A campus platform combining marketplace, study spaces, peer mentoring, partner matching, and printer status tracking. Features a ChatGPT-style AI assistant for natural-language interactions with all campus services.</p>
+        <div class="project-stack">
+          <span class="stack-tag">Next.js</span>
+          <span class="stack-tag">React</span>
+          <span class="stack-tag">Drizzle ORM</span>
+          <span class="stack-tag">Neon Postgres</span>
+          <span class="stack-tag">Tailwind</span>
+          <span class="stack-tag">AI Agent</span>
+        </div>
+        <a href="#" class="project-link">View project →</a>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-badge">RAG · Fine-Tuning</div>
+        <h3 class="project-name">RAG System</h3>
+        <p class="project-desc">Scalable RAG pipeline enhancing contextual responses for ROS2 documentation. Fine-tuned Meta's Llama-3-8B-Instruct with LoRA, integrated Qdrant vector storage and MongoDB in an automated ETL workflow with hybrid search.</p>
+        <div class="project-stack">
+          <span class="stack-tag">Llama-3</span>
+          <span class="stack-tag">Qdrant</span>
+          <span class="stack-tag">MongoDB</span>
+          <span class="stack-tag">Docker</span>
+          <span class="stack-tag">Gradio</span>
+          <span class="stack-tag">LoRA</span>
+        </div>
+        <a href="#" class="project-link">View project →</a>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-badge">Multi-Agent AI</div>
+        <h3 class="project-name">SmartCache AI</h3>
+        <p class="project-desc">Offline-first content system using Multi-Agent AI (AutoGen) to intelligently assess, curate, and fetch high-quality media. Distributed architecture with Django and Celery for async scraping, real-time WebSocket progress, and full Docker containerization.</p>
+        <div class="project-stack">
+          <span class="stack-tag">Django</span>
+          <span class="stack-tag">React</span>
+          <span class="stack-tag">Redis</span>
+          <span class="stack-tag">Celery</span>
+          <span class="stack-tag">AutoGen</span>
+          <span class="stack-tag">Docker</span>
+        </div>
+        <a href="#" class="project-link">View project →</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <div class="section-header reveal">
+      <span class="section-num">04</span>
+      <h2 class="section-title">Education</h2>
+    </div>
+    <div class="edu-grid reveal">
+      <div class="edu-card">
+        <h3 class="edu-degree">M.S. Computer Science</h3>
+        <p class="edu-school">New York University — Tandon School of Engineering</p>
+        <p class="edu-meta">Sep 2024 – May 2026 · Brooklyn, NY</p>
+        <div class="edu-gpa">GPA: 3.889 / 4.0</div>
+        <p class="edu-courses">Algorithms · Big Data · Information Visualization · Artificial Intelligence · Software Engineering</p>
+      </div>
+      <div class="edu-card">
+        <h3 class="edu-degree">B.Tech Computer Science</h3>
+        <p class="edu-school">Manipal University Jaipur</p>
+        <p class="edu-meta">Aug 2020 – May 2024 · Rajasthan, India</p>
+        <div class="edu-gpa">CGPA: 8.99 / 10</div>
+        <p class="edu-courses">Computer Science & Engineering</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-name">Ansh Harjai</div>
+    <div class="footer-links">
+      <a href="mailto:ah7163@nyu.edu">Email</a>
+      <a href="https://linkedin.com/" target="_blank">LinkedIn</a>
+      <a href="https://github.com/" target="_blank">GitHub</a>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
