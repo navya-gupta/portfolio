@@ -118,7 +118,7 @@
         right: 0;
         z-index: 100;
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
         padding: 1rem 3rem;
         background: rgba(6, 11, 24, 0.8);
@@ -126,26 +126,14 @@
         border-bottom: 1px solid var(--border);
       }
 
-      .nav-logo {
-        font-family: "JetBrains Mono", monospace;
-        font-size: 0.75rem;
-        letter-spacing: 0.12em;
-        color: var(--blue);
-        text-transform: uppercase;
-        font-weight: 500;
-      }
-
       .nav-links {
         display: flex;
-        gap: 2rem;
+        gap: 1.4rem;
         list-style: none;
         align-items: center;
-      }
-
-      .nav-actions {
-        display: flex;
-        align-items: center;
-        gap: 1.5rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        row-gap: 0.6rem;
       }
 
       .nav-links a {
@@ -156,32 +144,86 @@
         color: var(--text-dim);
         text-decoration: none;
         transition: color 0.2s;
+        position: relative;
+        padding-bottom: 0.25rem;
       }
 
       .nav-links a:hover {
         color: var(--blue-light);
       }
 
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 2px;
+        background: var(--blue);
+        transform: scaleX(0);
+        transform-origin: center;
+        opacity: 0;
+        transition:
+          transform 0.2s,
+          opacity 0.2s;
+      }
+
+      .nav-links a.active {
+        color: var(--blue-light);
+      }
+
+      .nav-links a.active::after {
+        transform: scaleX(1);
+        opacity: 1;
+      }
+
+      .nav-links button {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.68rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--text-dim);
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0.25rem 0;
+        transition:
+          color 0.2s,
+          background 0.2s,
+          border-color 0.2s;
+      }
+
+      .nav-links button:hover {
+        color: var(--blue-light);
+      }
+
       .nav-resume {
-        padding: 0.55rem 1.1rem;
-        font-size: 0.6rem;
+        padding: 0.45rem 0.95rem;
+        font-size: 0.64rem;
         letter-spacing: 0.12em;
+        border-radius: 6px;
+        border: 1px solid rgba(59, 130, 246, 0.35);
+        background: rgba(59, 130, 246, 0.1);
+        color: var(--blue-light);
         white-space: nowrap;
       }
 
       /* HERO */
       .hero {
         min-height: 100vh;
-        display: grid;
-        grid-template-columns: 1.1fr 0.9fr;
+        display: flex;
+        flex-direction: column;
         align-items: center;
+        justify-content: center;
+        text-align: center;
         padding: 8rem 3rem 4rem;
-        gap: 4rem;
+        gap: 2rem;
       }
 
       .hero-eyebrow {
         display: flex;
         align-items: center;
+        justify-content: center;
         gap: 0.75rem;
         margin-bottom: 1.5rem;
         opacity: 0;
@@ -238,6 +280,7 @@
       .dual-track {
         display: flex;
         align-items: center;
+        justify-content: center;
         gap: 0.75rem;
         margin-bottom: 1.5rem;
         flex-wrap: wrap;
@@ -278,6 +321,8 @@
         color: var(--text-dim);
         max-width: 460px;
         margin-bottom: 2rem;
+        margin-left: auto;
+        margin-right: auto;
         opacity: 0;
         animation: fadeUp 0.6s ease forwards 0.35s;
         line-height: 1.75;
@@ -286,6 +331,7 @@
 
       .hero-cta {
         display: flex;
+        justify-content: center;
         gap: 0.875rem;
         flex-wrap: wrap;
         margin-bottom: 2rem;
@@ -348,13 +394,14 @@
       .hero-contact-strip {
         display: flex;
         gap: 1.5rem;
+        justify-content: center;
         opacity: 0;
         animation: fadeUp 0.6s ease forwards 0.6s;
       }
 
       .hero-contact-strip a {
         font-family: "JetBrains Mono", monospace;
-        font-size: 0.65rem;
+        font-size: 0.85rem;
         color: var(--muted);
         text-decoration: none;
         letter-spacing: 0.08em;
@@ -459,6 +506,122 @@
         font-size: clamp(1.75rem, 3vw, 2.5rem);
         font-weight: 800;
         letter-spacing: -0.03em;
+      }
+
+      /* TIMELINE */
+      .timeline {
+        position: relative;
+        display: grid;
+        gap: 3rem;
+      }
+
+      .timeline-line {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        width: 2px;
+        background: linear-gradient(
+          180deg,
+          rgba(59, 130, 246, 0.9),
+          rgba(34, 211, 238, 0.15)
+        );
+        transform-origin: top;
+        transform: scaleY(0);
+        transition: transform 0.2s ease-out;
+        z-index: 0;
+      }
+
+      .timeline-item {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 180px minmax(0, 1fr);
+        align-items: center;
+        gap: 2.5rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      .timeline-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 2.1rem 2.4rem;
+        height: clamp(260px, 36vh, 420px);
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        transition:
+          background 0.2s,
+          border-color 0.2s,
+          transform 0.2s;
+      }
+
+      .timeline-card:hover {
+        background: var(--surface2);
+        border-color: var(--border2);
+        transform: translateY(-2px);
+      }
+
+      .timeline-role {
+        font-family: "Inter", sans-serif;
+        font-size: 1.3rem;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+        margin-bottom: 0.35rem;
+      }
+
+      .timeline-org {
+        font-size: 1.05rem;
+        color: var(--text-dim);
+        margin-bottom: 0.5rem;
+      }
+
+      .timeline-meta {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.72rem;
+        color: var(--blue-light);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      .timeline-item--left .timeline-card {
+        justify-self: end;
+        text-align: center;
+      }
+
+      .timeline-item--right .timeline-card {
+        justify-self: start;
+        text-align: center;
+      }
+
+      .timeline-marker {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.45rem;
+      }
+
+      .timeline-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        background: var(--blue);
+        box-shadow: 0 0 12px rgba(59, 130, 246, 0.6);
+      }
+
+      .timeline-date {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.58rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--text-dim);
+      }
+
+      .timeline-spacer {
+        min-height: 1px;
       }
 
       /* EDUCATION */
@@ -817,27 +980,29 @@
       /* FOOTER */
       footer {
         border-top: 1px solid var(--border);
-        padding: 2.5rem 3rem;
+        padding: 3.5rem 3rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        gap: 2rem;
       }
 
       .footer-name {
         font-family: "Inter", sans-serif;
-        font-size: 1rem;
+        font-size: 1.2rem;
         font-weight: 700;
         letter-spacing: -0.01em;
       }
 
       .footer-links {
         display: flex;
-        gap: 1.5rem;
+        gap: 1.75rem;
+        align-items: center;
       }
 
       .footer-links a {
         font-family: "JetBrains Mono", monospace;
-        font-size: 0.65rem;
+        font-size: 0.75rem;
         letter-spacing: 0.08em;
         text-transform: uppercase;
         color: var(--muted);
@@ -847,6 +1012,40 @@
 
       .footer-links a:hover {
         color: var(--blue-light);
+      }
+
+      .footer-icons {
+        display: flex;
+        gap: 0.8rem;
+        align-items: center;
+      }
+
+      .footer-icons a {
+        width: 38px;
+        height: 38px;
+        border-radius: 999px;
+        border: 1px solid var(--border2);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-dim);
+        text-decoration: none;
+        transition:
+          color 0.2s,
+          border-color 0.2s,
+          transform 0.2s;
+      }
+
+      .footer-icons a:hover {
+        color: var(--blue-light);
+        border-color: var(--blue);
+        transform: translateY(-2px);
+      }
+
+      .footer-icons svg {
+        width: 18px;
+        height: 18px;
+        fill: currentColor;
       }
 
       /* ANIMATIONS */
@@ -891,17 +1090,18 @@
         nav {
           padding: 1rem 1.5rem;
         }
-        .nav-links {
-          display: none;
-        }
-        .nav-actions {
-          gap: 0.75rem;
-        }
         .nav-resume {
           padding: 0.5rem 0.9rem;
         }
+        .nav-links {
+          gap: 0.9rem;
+          row-gap: 0.5rem;
+        }
+        .nav-links a,
+        .nav-links button {
+          font-size: 0.62rem;
+        }
         .hero {
-          grid-template-columns: 1fr;
           padding: 6rem 1.5rem 3rem;
         }
         section {
@@ -916,6 +1116,29 @@
         }
         .project-item {
           grid-template-columns: 1fr;
+        }
+        .timeline-line {
+          left: 12px;
+        }
+        .timeline-item {
+          grid-template-columns: 24px 1fr;
+          gap: 1rem;
+          align-items: flex-start;
+        }
+        .timeline-marker {
+          grid-column: 1;
+        }
+        .timeline-item--left .timeline-card,
+        .timeline-item--right .timeline-card {
+          grid-column: 2;
+          text-align: left;
+          justify-self: start;
+          height: clamp(220px, 32vh, 320px);
+          padding: 1.6rem 1.8rem;
+          width: 100%;
+        }
+        .timeline-spacer {
+          display: none;
         }
         footer {
           flex-direction: column;
@@ -932,26 +1155,26 @@
     <div class="orb orb-3"></div>
 
     <nav>
-      <span class="nav-logo">AH.dev</span>
-      <div class="nav-actions">
-        <ul class="nav-links">
-          <li><a href="#education">Education</a></li>
-          <li><a href="#projects">Projects</a></li>
-          <li><a href="#experience">Experience</a></li>
-          <li><a href="#skills">Skills</a></li>
-        </ul>
-        <button
-          class="btn btn-resume nav-resume"
-          type="button"
-          data-resume-download
-        >
-          Resume ⬇
-        </button>
-      </div>
+      <ul class="nav-links">
+        <li><a href="#about" data-nav-link="about">About Me</a></li>
+        <li><a href="#skills" data-nav-link="skills">Skills</a></li>
+        <li>
+          <a href="#timeline" data-nav-link="timeline">
+            Experience & Education
+          </a>
+        </li>
+        <li><a href="#projects" data-nav-link="projects">Projects</a></li>
+        <li><a href="#contact" data-nav-link="contact">Contact</a></li>
+        <li>
+          <button class="nav-resume" type="button" data-resume-download>
+            Resume
+          </button>
+        </li>
+      </ul>
     </nav>
 
     <!-- HERO -->
-    <section class="hero" id="home">
+    <section class="hero" id="about" data-nav-target="about">
       <div>
         <div class="hero-eyebrow">
           <div class="eyebrow-dot"></div>
@@ -998,50 +1221,148 @@
           <a href="tel:6467023732">✆ (646) 702-3732</a>
         </div>
       </div>
+    </section>
 
-      <div class="hero-right">
-        <div class="hero-contact-card">
-          <a href="mailto:ah7163@nyu.edu">✉ ah7163@nyu.edu</a>
-          <a href="tel:6467023732">✆ (646) 702-3732</a>
+    <!-- SKILLS -->
+    <section id="skills" data-nav-target="skills">
+      <div class="section-header reveal">
+        <span class="section-num">01</span>
+        <h2 class="section-title">Technical Skills</h2>
+      </div>
+      <div class="skills-grid reveal">
+        <div class="skill-card">
+          <div class="skill-category">Full Stack Engineering</div>
+          <div class="skill-tags">
+            <span class="tag">React</span>
+            <span class="tag">Next.js</span>
+            <span class="tag">Python</span>
+            <span class="tag">Flask</span>
+            <span class="tag">FastAPI</span>
+            <span class="tag">Django</span>
+            <span class="tag">SQLAlchemy</span>
+            <span class="tag">REST APIs</span>
+            <span class="tag">WebSockets</span>
+            <span class="tag">Docker</span>
+            <span class="tag">Git / GitHub</span>
+            <span class="tag">C++</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-category">AI / Machine Learning</div>
+          <div class="skill-tags">
+            <span class="tag">PyTorch</span>
+            <span class="tag">TensorFlow</span>
+            <span class="tag">Scikit-learn</span>
+            <span class="tag">NLP</span>
+            <span class="tag">Computer Vision</span>
+            <span class="tag">LLMs</span>
+            <span class="tag">Llama-3</span>
+            <span class="tag">GPT-4</span>
+            <span class="tag">LoRA / QLoRA</span>
+            <span class="tag">RAG</span>
+            <span class="tag">LangChain</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-category">Data & Infrastructure</div>
+          <div class="skill-tags">
+            <span class="tag">PySpark</span>
+            <span class="tag">SQL</span>
+            <span class="tag">MongoDB</span>
+            <span class="tag">Qdrant</span>
+            <span class="tag">FAISS</span>
+            <span class="tag">Redis</span>
+            <span class="tag">Celery</span>
+            <span class="tag">Azure AI</span>
+            <span class="tag">ETL Pipelines</span>
+            <span class="tag">Vector DBs</span>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- EDUCATION -->
-    <section id="education">
+    <!-- TIMELINE -->
+    <section id="timeline" data-nav-target="timeline">
       <div class="section-header reveal">
-        <span class="section-num">01</span>
-        <h2 class="section-title">Education</h2>
+        <span class="section-num">02</span>
+        <h2 class="section-title">Experience & Education</h2>
       </div>
-      <div class="edu-grid reveal">
-        <div class="edu-card">
-          <h3 class="edu-degree">M.S. Computer Science</h3>
-          <p class="edu-school">
-            New York University — Tandon School of Engineering
-          </p>
-          <p class="edu-meta">Sep 2024 – May 2026 · Brooklyn, NY</p>
-          <div class="edu-gpa">GPA: 3.889 / 4.0</div>
-          <p class="edu-courses">
-            Algorithms · Big Data · Information Visualization · Artificial
-            Intelligence · Software Engineering
-          </p>
+      <div class="timeline" data-timeline>
+        <div class="timeline-line" data-timeline-line></div>
+
+        <div class="timeline-item timeline-item--right reveal">
+          <div class="timeline-spacer"></div>
+          <div class="timeline-marker">
+            <span class="timeline-dot"></span>
+            <span class="timeline-date">Apr 2025</span>
+          </div>
+          <div class="timeline-card">
+            <div class="timeline-role">CSE Lab Assistant</div>
+            <div class="timeline-org">New York University</div>
+            <div class="timeline-meta">Apr 2025 – Present</div>
+          </div>
         </div>
-        <div class="edu-card">
-          <h3 class="edu-degree">B.Tech Computer Science</h3>
-          <p class="edu-school">Manipal University Jaipur</p>
-          <p class="edu-meta">Aug 2020 – May 2024 · Rajasthan, India</p>
-          <div class="edu-gpa">CGPA: 8.99 / 10</div>
-          <p class="edu-courses">
-            Computer Science & Engineering · Core CS Fundamentals
-          </p>
+
+        <div class="timeline-item timeline-item--left reveal">
+          <div class="timeline-card">
+            <div class="timeline-role">M.S. Computer Science</div>
+            <div class="timeline-org">New York University</div>
+            <div class="timeline-meta">Sep 2024 – Present</div>
+          </div>
+          <div class="timeline-marker">
+            <span class="timeline-dot"></span>
+            <span class="timeline-date">Sep 2024</span>
+          </div>
+          <div class="timeline-spacer"></div>
+        </div>
+
+        <div class="timeline-item timeline-item--right reveal">
+          <div class="timeline-spacer"></div>
+          <div class="timeline-marker">
+            <span class="timeline-dot"></span>
+            <span class="timeline-date">Jan 2024</span>
+          </div>
+          <div class="timeline-card">
+            <div class="timeline-role">Data Science Intern</div>
+            <div class="timeline-org">Polestar Solutions</div>
+            <div class="timeline-meta">Jan 2024 – May 2024</div>
+          </div>
+        </div>
+
+        <div class="timeline-item timeline-item--left reveal">
+          <div class="timeline-card">
+            <div class="timeline-role">Software Engineer Intern</div>
+            <div class="timeline-org">HCLTech</div>
+            <div class="timeline-meta">May 2023 – Jul 2023</div>
+          </div>
+          <div class="timeline-marker">
+            <span class="timeline-dot"></span>
+            <span class="timeline-date">May 2023</span>
+          </div>
+          <div class="timeline-spacer"></div>
+        </div>
+
+        <div class="timeline-item timeline-item--right reveal">
+          <div class="timeline-spacer"></div>
+          <div class="timeline-marker">
+            <span class="timeline-dot"></span>
+            <span class="timeline-date">Aug 2020</span>
+          </div>
+          <div class="timeline-card">
+            <div class="timeline-role">
+              B.Tech Computer Science and Engineering
+            </div>
+            <div class="timeline-org">Manipal University Jaipur</div>
+            <div class="timeline-meta">Aug 2020 – May 2024</div>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- PROJECTS -->
-    <section id="projects">
+    <section id="projects" data-nav-target="projects">
       <div class="section-header reveal">
-        <span class="section-num">02</span>
+        <span class="section-num">03</span>
         <h2 class="section-title">Projects</h2>
       </div>
       <div class="projects-list">
@@ -1170,153 +1491,7 @@
       </div>
     </section>
 
-    <!-- EXPERIENCE -->
-    <section id="experience">
-      <div class="section-header reveal">
-        <span class="section-num">03</span>
-        <h2 class="section-title">Experience</h2>
-      </div>
-      <div class="exp-list">
-        <div class="exp-item reveal">
-          <div class="exp-meta">
-            <span class="exp-date">Apr 2025 – Present</span>
-            <span class="exp-company">New York University</span>
-            <span class="exp-location">Brooklyn, NY</span>
-          </div>
-          <div>
-            <h3 class="exp-role">CSE Lab Assistant</h3>
-            <ul class="exp-bullets">
-              <li>
-                Developed a full-stack lab monitoring web app showing real-time
-                availability of 30+ university lab computers using Python,
-                Flask, SQLAlchemy, and SQLite.
-              </li>
-              <li>
-                Built a backend service to ping and log machine states every 30
-                seconds, maintaining live system data in the database.
-              </li>
-              <li>
-                Provide technical assistance during lab sessions, resolving
-                hardware/software issues and ensuring consistent uptime.
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="exp-item reveal">
-          <div class="exp-meta">
-            <span class="exp-date">Jan – May 2024</span>
-            <span class="exp-company">Polestar Solutions</span>
-            <span class="exp-location">Uttar Pradesh, India</span>
-          </div>
-          <div>
-            <h3 class="exp-role">Data Science Intern</h3>
-            <ul class="exp-bullets">
-              <li>
-                Deployed 3 AI-powered chatbots using Retrieval-Augmented
-                Generation (RAG) to automate HR and document-based queries,
-                improving answer quality by 20%.
-              </li>
-              <li>
-                Boosted application response time by 30% through optimized
-                RESTful APIs using Flask, SQLAlchemy, and Azure AI Search.
-              </li>
-              <li>
-                Reduced SQL query times by 20% via database performance tuning
-                and strategic indexing.
-              </li>
-              <li>
-                Improved chatbot reliability by refining retrieval strategies
-                and prompt chaining with LangChain.
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="exp-item reveal">
-          <div class="exp-meta">
-            <span class="exp-date">May – Jul 2023</span>
-            <span class="exp-company">HCLTech</span>
-            <span class="exp-location">Uttar Pradesh, India</span>
-          </div>
-          <div>
-            <h3 class="exp-role">Software Engineering Intern</h3>
-            <ul class="exp-bullets">
-              <li>
-                Designed and deployed interactive Power BI dashboards for
-                enterprise stakeholders using complex DAX measures to track KPIs
-                and visualize real-time business trends.
-              </li>
-              <li>
-                Built automated ETL workflows using Python and SQL to aggregate
-                data from disparate sources, reducing manual reporting hours by
-                40%.
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SKILLS -->
-    <section id="skills">
-      <div class="section-header reveal">
-        <span class="section-num">04</span>
-        <h2 class="section-title">Technical Skills</h2>
-      </div>
-      <div class="skills-grid reveal">
-        <div class="skill-card">
-          <div class="skill-category">Full Stack Engineering</div>
-          <div class="skill-tags">
-            <span class="tag">React</span>
-            <span class="tag">Next.js</span>
-            <span class="tag">Python</span>
-            <span class="tag">Flask</span>
-            <span class="tag">FastAPI</span>
-            <span class="tag">Django</span>
-            <span class="tag">SQLAlchemy</span>
-            <span class="tag">REST APIs</span>
-            <span class="tag">WebSockets</span>
-            <span class="tag">Docker</span>
-            <span class="tag">Git / GitHub</span>
-            <span class="tag">C++</span>
-          </div>
-        </div>
-        <div class="skill-card">
-          <div class="skill-category">AI / Machine Learning</div>
-          <div class="skill-tags">
-            <span class="tag">PyTorch</span>
-            <span class="tag">TensorFlow</span>
-            <span class="tag">Scikit-learn</span>
-            <span class="tag">NLP</span>
-            <span class="tag">Computer Vision</span>
-            <span class="tag">LLMs</span>
-            <span class="tag">Llama-3</span>
-            <span class="tag">GPT-4</span>
-            <span class="tag">LoRA / QLoRA</span>
-            <span class="tag">RAG</span>
-            <span class="tag">LangChain</span>
-          </div>
-        </div>
-        <div class="skill-card">
-          <div class="skill-category">Data & Infrastructure</div>
-          <div class="skill-tags">
-            <span class="tag">PySpark</span>
-            <span class="tag">SQL</span>
-            <span class="tag">MongoDB</span>
-            <span class="tag">Qdrant</span>
-            <span class="tag">FAISS</span>
-            <span class="tag">Redis</span>
-            <span class="tag">Celery</span>
-            <span class="tag">Azure AI</span>
-            <span class="tag">ETL Pipelines</span>
-            <span class="tag">Vector DBs</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <footer>
+    <footer id="contact" data-nav-target="contact">
       <div class="footer-name">Ansh Harjai</div>
       <div class="footer-links">
         <a href="mailto:ah7163@nyu.edu">Email</a>
@@ -1326,6 +1501,37 @@
           >LinkedIn</a
         >
         <a href="https://github.com/AnshHarjai/" target="_blank">GitHub</a>
+      </div>
+      <div class="footer-icons">
+        <a href="mailto:ah7163@nyu.edu" aria-label="Email">
+          <svg viewBox="0 0 24 24" role="img" aria-hidden="true">
+            <path
+              d="M4 6h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2zm0 2v.5l8 4.5 8-4.5V8H4zm0 2.7V16h16v-5.3l-7.4 4.2a2 2 0 0 1-1.2.3c-.4 0-.8-.1-1.2-.3L4 10.7z"
+            />
+          </svg>
+        </a>
+        <a
+          href="https://www.linkedin.com/in/ansh-harjai-7a422b245/"
+          target="_blank"
+          aria-label="LinkedIn"
+        >
+          <svg viewBox="0 0 24 24" role="img" aria-hidden="true">
+            <path
+              d="M4.98 3.5A2.5 2.5 0 1 0 5 8.5a2.5 2.5 0 0 0-.02-5zM3 9h4v12H3V9zm7 0h3.8v1.6h.1c.5-1 1.8-2 3.7-2 4 0 4.7 2.6 4.7 6v6.4h-4v-5.7c0-1.4 0-3.1-1.9-3.1-1.9 0-2.2 1.5-2.2 3v5.8h-4V9z"
+            />
+          </svg>
+        </a>
+        <a
+          href="https://github.com/AnshHarjai/"
+          target="_blank"
+          aria-label="GitHub"
+        >
+          <svg viewBox="0 0 24 24" role="img" aria-hidden="true">
+            <path
+              d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.2-3.37-1.2-.45-1.15-1.1-1.45-1.1-1.45-.9-.62.07-.6.07-.6 1 .07 1.53 1.04 1.53 1.04.9 1.53 2.36 1.09 2.94.83.09-.65.35-1.1.64-1.35-2.22-.25-4.55-1.1-4.55-4.9 0-1.08.39-1.96 1.03-2.65-.1-.26-.45-1.3.1-2.7 0 0 .84-.27 2.75 1.02A9.6 9.6 0 0 1 12 6.8c.85 0 1.7.11 2.5.33 1.9-1.3 2.74-1.02 2.74-1.02.56 1.4.21 2.44.1 2.7.64.69 1.03 1.57 1.03 2.65 0 3.82-2.34 4.65-4.57 4.9.36.31.69.92.69 1.86v2.76c0 .26.18.57.69.48A10 10 0 0 0 12 2z"
+            />
+          </svg>
+        </a>
       </div>
     </footer>
 
@@ -1344,6 +1550,70 @@
         { threshold: 0.1 },
       );
       reveals.forEach((el) => observer.observe(el));
+
+      // Nav scrollspy
+      const navLinks = document.querySelectorAll("[data-nav-link]");
+      const navTargets = document.querySelectorAll("[data-nav-target]");
+
+      const setActiveNav = (id) => {
+        navLinks.forEach((link) => {
+          link.classList.toggle("active", link.dataset.navLink === id);
+        });
+      };
+
+      if (navLinks.length && navTargets.length) {
+        const navObserver = new IntersectionObserver(
+          (entries) => {
+            const visible = entries.filter((entry) => entry.isIntersecting);
+            if (!visible.length) {
+              return;
+            }
+            const best = visible.reduce((max, entry) =>
+              entry.intersectionRatio > max.intersectionRatio ? entry : max,
+            );
+            setActiveNav(best.target.dataset.navTarget);
+          },
+          {
+            threshold: [0.2, 0.4, 0.6],
+            rootMargin: "0px 0px -35% 0px",
+          },
+        );
+
+        navTargets.forEach((target) => navObserver.observe(target));
+        setActiveNav("about");
+      }
+
+      // Timeline line grows as the section scrolls into view
+      const timeline = document.querySelector("[data-timeline]");
+      const timelineLine = document.querySelector("[data-timeline-line]");
+      let timelineTicking = false;
+
+      const updateTimeline = () => {
+        if (!timeline || !timelineLine) {
+          timelineTicking = false;
+          return;
+        }
+        const rect = timeline.getBoundingClientRect();
+        const total = rect.height || 1;
+        const progress = Math.min(
+          Math.max((window.innerHeight - rect.top) / total, 0),
+          1,
+        );
+        timelineLine.style.transform = `scaleY(${progress})`;
+        timelineTicking = false;
+      };
+
+      const onTimelineScroll = () => {
+        if (timelineTicking) {
+          return;
+        }
+        timelineTicking = true;
+        window.requestAnimationFrame(updateTimeline);
+      };
+
+      updateTimeline();
+      window.addEventListener("scroll", onTimelineScroll);
+      window.addEventListener("resize", updateTimeline);
 
       // Get in touch
       const getInTouch = document.getElementById("getInTouch");
