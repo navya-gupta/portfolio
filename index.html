@@ -381,6 +381,12 @@
         font-weight: 500;
       }
 
+      .btn svg {
+        width: 16px;
+        height: 16px;
+        fill: currentColor;
+      }
+
       .btn-primary {
         background: var(--blue);
         color: #fff;
@@ -397,6 +403,26 @@
         background: transparent;
         color: var(--text-dim);
         border: 1px solid var(--border2);
+      }
+
+      .btn-ghost:hover {
+        color: var(--blue-light);
+        border-color: var(--blue);
+        transform: translateY(-1px);
+        box-shadow: 0 10px 24px rgba(59, 130, 246, 0.15);
+      }
+
+      .btn-resume {
+        border: 1px solid rgba(59, 130, 246, 0.4);
+        background: rgba(59, 130, 246, 0.12);
+        color: var(--blue-light);
+      }
+
+      .btn-resume:hover {
+        border-color: var(--blue);
+        background: rgba(59, 130, 246, 0.2);
+        transform: translateY(-1px);
+        box-shadow: 0 10px 24px rgba(59, 130, 246, 0.2);
       }
 
       .contact-section {
@@ -953,7 +979,7 @@
       /* SKILLS */
       .skills-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
         gap: 1px;
         background: var(--border);
         border: 1px solid var(--border);
@@ -963,7 +989,8 @@
 
       .skill-card {
         background: var(--surface);
-        padding: 2rem;
+        padding: 2.6rem;
+        min-height: 240px;
         transition: background 0.2s;
       }
 
@@ -973,7 +1000,7 @@
 
       .skill-category {
         font-family: "JetBrains Mono", monospace;
-        font-size: 0.62rem;
+        font-size: 0.72rem;
         letter-spacing: 0.15em;
         text-transform: uppercase;
         color: var(--cyan);
@@ -984,13 +1011,13 @@
       .skill-tags {
         display: flex;
         flex-wrap: wrap;
-        gap: 0.45rem;
+        gap: 0.6rem;
       }
 
       .tag {
         font-family: "JetBrains Mono", monospace;
-        font-size: 0.65rem;
-        padding: 0.28rem 0.65rem;
+        font-size: 0.72rem;
+        padding: 0.35rem 0.8rem;
         background: rgba(59, 130, 246, 0.07);
         border: 1px solid rgba(59, 130, 246, 0.18);
         color: var(--text-dim);
@@ -1257,20 +1284,38 @@
             href="mailto:ah7163@nyu.edu"
             class="btn btn-primary"
             id="getInTouch"
-            >Get in touch ↗</a
           >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M4 6h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2zm0 2v.5l8 4.5 8-4.5V8H4zm0 2.7V16h16v-5.3l-7.4 4.2a2 2 0 0 1-1.2.3c-.4 0-.8-.1-1.2-.3L4 10.7z"
+              />
+            </svg>
+            Email
+          </a>
           <a
             href="https://github.com/AnshHarjai/"
             target="_blank"
             class="btn btn-ghost"
-            >GitHub</a
           >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.2-3.37-1.2-.45-1.15-1.1-1.45-1.1-1.45-.9-.62.07-.6.07-.6 1 .07 1.53 1.04 1.53 1.04.9 1.53 2.36 1.09 2.94.83.09-.65.35-1.1.64-1.35-2.22-.25-4.55-1.1-4.55-4.9 0-1.08.39-1.96 1.03-2.65-.1-.26-.45-1.3.1-2.7 0 0 .84-.27 2.75 1.02A9.6 9.6 0 0 1 12 6.8c.85 0 1.7.11 2.5.33 1.9-1.3 2.74-1.02 2.74-1.02.56 1.4.21 2.44.1 2.7.64.69 1.03 1.57 1.03 2.65 0 3.82-2.34 4.65-4.57 4.9.36.31.69.92.69 1.86v2.76c0 .26.18.57.69.48A10 10 0 0 0 12 2z"
+              />
+            </svg>
+            GitHub
+          </a>
           <a
             href="https://www.linkedin.com/in/ansh-harjai-7a422b245/"
             target="_blank"
             class="btn btn-ghost"
-            >LinkedIn</a
           >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M4.98 3.5A2.5 2.5 0 1 0 5 8.5a2.5 2.5 0 0 0-.02-5zM3 9h4v12H3V9zm7 0h3.8v1.6h.1c.5-1 1.8-2 3.7-2 4 0 4.7 2.6 4.7 6v6.4h-4v-5.7c0-1.4 0-3.1-1.9-3.1-1.9 0-2.2 1.5-2.2 3v5.8h-4V9z"
+              />
+            </svg>
+            LinkedIn
+          </a>
           <button class="btn btn-resume" type="button" data-resume-download>
             ⬇ Download Resume
           </button>
@@ -1289,51 +1334,67 @@
       </div>
       <div class="skills-grid reveal">
         <div class="skill-card">
-          <div class="skill-category">Full Stack Engineering</div>
+          <div class="skill-category">Languages</div>
           <div class="skill-tags">
-            <span class="tag">React</span>
-            <span class="tag">Next.js</span>
             <span class="tag">Python</span>
-            <span class="tag">Flask</span>
-            <span class="tag">FastAPI</span>
-            <span class="tag">Django</span>
-            <span class="tag">SQLAlchemy</span>
-            <span class="tag">REST APIs</span>
-            <span class="tag">WebSockets</span>
-            <span class="tag">Docker</span>
-            <span class="tag">Git / GitHub</span>
-            <span class="tag">C++</span>
+            <span class="tag">SQL</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">HTML/CSS</span>
           </div>
         </div>
         <div class="skill-card">
-          <div class="skill-category">AI / Machine Learning</div>
+          <div class="skill-category">AI & Machine Learning</div>
           <div class="skill-tags">
             <span class="tag">PyTorch</span>
             <span class="tag">TensorFlow</span>
             <span class="tag">Scikit-learn</span>
             <span class="tag">NLP</span>
             <span class="tag">Computer Vision</span>
-            <span class="tag">LLMs</span>
-            <span class="tag">Llama-3</span>
-            <span class="tag">GPT-4</span>
-            <span class="tag">LoRA / QLoRA</span>
-            <span class="tag">RAG</span>
+            <span class="tag">Fine-Tuning (LoRA/QLoRA)</span>
             <span class="tag">LangChain</span>
+            <span class="tag">LlamaIndex</span>
           </div>
         </div>
         <div class="skill-card">
-          <div class="skill-category">Data & Infrastructure</div>
+          <div class="skill-category">Data Engineering & Big Data</div>
           <div class="skill-tags">
-            <span class="tag">PySpark</span>
-            <span class="tag">SQL</span>
-            <span class="tag">MongoDB</span>
-            <span class="tag">Qdrant</span>
-            <span class="tag">FAISS</span>
-            <span class="tag">Redis</span>
-            <span class="tag">Celery</span>
-            <span class="tag">Azure AI</span>
+            <span class="tag">PySpark (Distributed Computing)</span>
+            <span class="tag">GraphFrames</span>
+            <span class="tag">Hadoop</span>
             <span class="tag">ETL Pipelines</span>
-            <span class="tag">Vector DBs</span>
+            <span class="tag">Celery</span>
+            <span class="tag">Redis</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-category">Databases</div>
+          <div class="skill-tags">
+            <span class="tag">Vector DBs (Qdrant, FAISS)</span>
+            <span class="tag">PostgreSQL</span>
+            <span class="tag">MongoDB</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-category">Backend & Cloud</div>
+          <div class="skill-tags">
+            <span class="tag">FastAPI</span>
+            <span class="tag">Django</span>
+            <span class="tag">Flask</span>
+            <span class="tag">AWS (Lambda, S3, EC2)</span>
+            <span class="tag">Azure AI</span>
+            <span class="tag">Docker</span>
+            <span class="tag">CI/CD (GitHub Actions/GitLab)</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-category">Tools & Quality</div>
+          <div class="skill-tags">
+            <span class="tag">Git</span>
+            <span class="tag">JIRA</span>
+            <span class="tag">Postman</span>
+            <span class="tag">Selenium</span>
+            <span class="tag">PyTest (Unit & Integration)</span>
+            <span class="tag">PowerBI</span>
           </div>
         </div>
       </div>
@@ -1649,10 +1710,11 @@
         }
         const rect = timeline.getBoundingClientRect();
         const total = rect.height || 1;
-        const progress = Math.min(
+        const raw = Math.min(
           Math.max((window.innerHeight - rect.top) / total, 0),
           1,
         );
+        const progress = Math.pow(raw, 1.4);
         timelineLine.style.transform = `scaleY(${progress})`;
         timelineTicking = false;
       };
